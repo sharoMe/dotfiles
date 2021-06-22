@@ -87,7 +87,7 @@ function rprompt-git-current-branch {
   blue='033m%}'
   reset='%{\e[0m%}'   # reset
   
-  if [ ! -e  ".git" ]; then
+  if test -z $(git rev-parse --git-dir 2> /dev/null); then
     # git 管理されていないディレクトリは何も返さない
     return
   fi
