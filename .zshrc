@@ -1,7 +1,13 @@
 # aliases of conda command
-alias cona="conda activate"
-alias cond="conda deactivate" 
+alias cona='conda activate'
+alias cond='conda deactivate' 
 
+# global alias
+alias -g @c='| pbcopy'
+alias -g @g='| grep'
+alias -g @l='| less'
+alias -g @m='| more'
+alias -g @x='| xargs'
 
 # zplug
 source ~/.zplug/init.zsh
@@ -57,7 +63,8 @@ function left-prompt {
   
   user="${back_color}${name_b}${text_color}${name_t}"
   dir="${back_color}${path_b}${text_color}${path_t}"
-  echo "${user}%n%#@%m${back_color}${path_b}${text_color}${name_b}${sharp} ${dir}%~${reset}${text_color}${path_b}${sharp}${reset}\n${text_color}${arrow}→ ${reset}"
+#  echo "${user}%n%#@%m${back_color}${path_b}${text_color}${name_b}${sharp} ${dir}%~${reset}${text_color}${path_b}${sharp}${reset}\n${text_color}${arrow}→ ${reset}"
+  echo "${user}%n%#@%m${back_color}${path_b}${text_color}${name_b}${sharp} ${dir}%~${reset}${text_color}${path_b}${sharp}${reset} "
 }
 
 PROMPT=`left-prompt` 
@@ -72,7 +79,7 @@ function precmd() {
         echo ""
     fi
 }
-
+#<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 
 # git ブランチ名を色付きで表示させるメソッド
