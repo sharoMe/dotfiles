@@ -1,3 +1,3 @@
 #!/bin/sh
-ln -s ~/dotfiles/.zshrc ~/.zshrc
-ln -s ~/dotfiles/.zprofile ~/.zprofile
+ln -sf ~/.dotfiles/.zshrc ~/.zshrc
+ln -sf ~/.dotfiles/.zprofile ~/.zprofile
