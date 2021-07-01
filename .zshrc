@@ -13,13 +13,13 @@ alias -g @x='| xargs'
 source ~/.zplug/init.zsh
 zplug 'zplug/zplug', hook-build:'zplug --self-manage'
 
-# syntax highlighting(https://github.com/zsh-users/zsh-syntax-highlighting)
+# syntax highlighting
 zplug "zsh-users/zsh-syntax-highlighting"
-# コマンド入力途中で上下キー押したときの過去履歴がいい感じに出るようになる
+# commnad history search which you can type in any part of any command from history and then press the UP and DOWN arrows, to cycle through matches.
 zplug "zsh-users/zsh-history-substring-search"
-# 過去に入力したコマンドの履歴が灰色のサジェストで出る
+# command suggestions as you type based on history and completions.
 zplug "zsh-users/zsh-autosuggestions"
-# 補完強化
+# reinforced completion
 zplug "zsh-users/zsh-completions"
 
 # Install plugins if there are plugins that have not been installed
@@ -41,12 +41,8 @@ alias ll="ls -lG"
 alias la="ls -laG"
 
 
-
-
-#<<<<<<<< zsh style <<<<<<<<<
+#>>>>>>>>> prompt style >>>>>>>>>>>>
 export CLICOLOR=1
-
-echo "RUN or DIE."
 
 autoload -Uz compinit && compinit  # Gitの補完を有効化
 
@@ -82,50 +78,53 @@ function precmd() {
 #<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 
-# git ブランチ名を色付きで表示させるメソッド
+# display git branch
 function rprompt-git-current-branch {
   local branch_name st branch_status
   
   branch='\ue0a0'
-  color='%{\e[38;5;' #  文字色を設定
+  color='%{\e[38;5;'
   green='114m%}'
   red='001m%}'
   yellow='227m%}'
   blue='033m%}'
-  reset='%{\e[0m%}'   # reset
+  reset='%{\e[0m%}'
   
   if test -z $(git rev-parse --git-dir 2> /dev/null); then
-    # git 管理されていないディレクトリは何も返さない
     return
   fi
   branch_name=`git rev-parse --abbrev-ref HEAD 2> /dev/null`
   st=`git status 2> /dev/null`
   if [[ -n `echo "$st" | grep "^nothing to"` ]]; then
-    # 全て commit されてクリーンな状態
+    # Clear condition (Everything is committed.)
     branch_status="${color}${green}${branch}"
   elif [[ -n `echo "$st" | grep "^Untracked files"` ]]; then
-    # git 管理されていないファイルがある状態
+    # Some file are not tracked.
     branch_status="${color}${red}${branch}?"
   elif [[ -n `echo "$st" | grep "^Changes not staged for commit"` ]]; then
-    # git add されていないファイルがある状態
+    # Changes not staged for commit
     branch_status="${color}${red}${branch}+"
   elif [[ -n `echo "$st" | grep "^Changes to be committed"` ]]; then
-    # git commit されていないファイルがある状態
+    # Changes to be commited
     branch_status="${color}${yellow}${branch}!"
   elif [[ -n `echo "$st" | grep "^rebase in progress"` ]]; then
-    # コンフリクトが起こった状態
+    # Confilict has occurred
     echo "${color}${red}${branch}!(no branch)${reset}"
     return
   else
-    # 上記以外の状態の場合
     branch_status="${color}${blue}${branch}"
   fi
-  # ブランチ名を色付きで表示する
+  # display git branch with status color
   echo "${branch_status}$branch_name${reset}"
 }
  
-# プロンプトが表示されるたびにプロンプト文字列を評価、置換する
+# Evaluate and replace the prompt string everytime the prompt is displayed.
 setopt prompt_subst
  
-# プロンプトの右側にメソッドの結果を表示させる
+# Show git branch on the right side of the prompt
 RPROMPT='`rprompt-git-current-branch`'
+
+
+# Slogan
+echo "Learn or Die."
+
